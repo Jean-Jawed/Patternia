@@ -213,6 +213,10 @@ function loop() {
 }
 
 // ── Start ─────────────────────────────────────────────────
+// Bind D-pad après que le DOM soit rendu
+window.addEventListener('DOMContentLoaded', () => input._maybeBindJoystick(), { once: true });
+// Si DOMContentLoaded est déjà passé (module chargé en defer)
+if (document.readyState !== 'loading') input._maybeBindJoystick();
 init();
 
 // ── Back to home ─────────────────────────────────────────

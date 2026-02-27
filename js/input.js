@@ -12,7 +12,6 @@ export class InputManager {
 
     this._bindKeyboard();
     this._bindGamepad();
-    this._maybeBindJoystick();
   }
 
   // ── Consume next direction (called by main loop) ──────────
