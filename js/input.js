@@ -76,7 +76,10 @@ export class InputManager {
 
   // ── Mobile D-pad ──────────────────────────────────────────
   _maybeBindJoystick() {
-    if (!('ontouchstart' in window) && navigator.maxTouchPoints < 1) return;
+    const isTouch = ('ontouchstart' in window)
+      || navigator.maxTouchPoints > 0
+      || window.matchMedia('(pointer: coarse)').matches;
+    if (!isTouch) return;
 
     const dpad = document.getElementById('dpad');
     if (!dpad) return;
