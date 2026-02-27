@@ -74,40 +74,22 @@ export class InputManager {
   }
 
   // ── Mobile D-pad ──────────────────────────────────────────
-  _maybeBindJoystick() {
-    const isTouch = ('ontouchstart' in window)
-      || navigator.maxTouchPoints > 0
-      || window.matchMedia('(pointer: coarse)').matches;
-    if (!isTouch) return;
-
-    const dpad = document.getElementById('dpad');
-    if (!dpad) return;
-    dpad.classList.remove('hidden');
-
+  // Visible/caché par CSS uniquement (media query ≥768px)
+  // Pas de détection touch — on branche toujours les listeners
+  bindDpad() {
     const dirs = ['up', 'down', 'left', 'right'];
-
     dirs.forEach(dir => {
       const btn = document.getElementById(`dpad-${dir}`);
       if (!btn) return;
-
-      // touchstart: enqueue immediately on finger-down
       btn.addEventListener('touchstart', e => {
         e.preventDefault();
         this._enqueue(dir);
         btn.classList.add('pressed');
       }, { passive: false });
-
-      btn.addEventListener('touchend', () => {
-        btn.classList.remove('pressed');
-      }, { passive: true });
-
-      // Fallback for mouse (desktop testing)
-      btn.addEventListener('mousedown', () => {
-        this._enqueue(dir);
-        btn.classList.add('pressed');
-      });
-      btn.addEventListener('mouseup',   () => btn.classList.remove('pressed'));
-      btn.addEventListener('mouseleave',() => btn.classList.remove('pressed'));
+      btn.addEventListener('touchend',   () => btn.classList.remove('pressed'), { passive: true });
+      btn.addEventListener('mousedown',  () => { this._enqueue(dir); btn.classList.add('pressed'); });
+      btn.addEventListener('mouseup',    () => btn.classList.remove('pressed'));
+      btn.addEventListener('mouseleave', () => btn.classList.remove('pressed'));
     });
   }
 
