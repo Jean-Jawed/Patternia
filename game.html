@@ -77,21 +77,11 @@
 
   <script type="module" src="js/main.js"></script>
 
-  <!-- DEBUG OVERLAY — à supprimer après diagnostic -->
-  <div id="debug-overlay" style="position:fixed;top:50%;left:10px;z-index:9999;background:rgba(0,0,0,0.82);color:#fff;font-size:12px;padding:10px 14px;border-radius:6px;line-height:1.8;pointer-events:none;"></div>
+
+  <!-- DEBUG -->
+  <div id="dbg" style="position:fixed;top:100px;left:20px;right:20px;z-index:99999;background:red;color:white;font-size:16px;padding:16px;border-radius:8px;">JS pas encore exécuté</div>
   <script>
-    setTimeout(() => {
-      const d = document.getElementById('dpad');
-      const cs = getComputedStyle(d);
-      document.getElementById('debug-overlay').innerHTML =
-        'innerWidth: '  + window.innerWidth  + '<br>' +
-        'innerHeight: ' + window.innerHeight + '<br>' +
-        'dpad.display: '     + cs.display     + '<br>' +
-        'dpad.visibility: '  + cs.visibility  + '<br>' +
-        'dpad.opacity: '     + cs.opacity     + '<br>' +
-        'dpad.zIndex: '      + cs.zIndex      + '<br>' +
-        'dpad.bottom: '      + cs.bottom;
-    }, 800);
+    document.getElementById('dbg').textContent = 'JS OK — width: ' + window.innerWidth;
   </script>
 </body>
 </html>
