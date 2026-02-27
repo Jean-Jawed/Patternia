@@ -81,6 +81,7 @@ html, body {
   position: fixed;
   bottom: 0; left: 0; right: 0;
   height: 190px;
+  background: red !important;
   z-index: 9999;
   display: grid;
   grid-template-areas:
