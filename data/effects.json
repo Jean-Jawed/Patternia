@@ -1,0 +1,49 @@
+{
+  "_comment": "Registre de tous les effets gameplay disponibles. Utilisés dans rules[].effect des niveaux.",
+  "effects": [
+    {
+      "id": "kill",
+      "label": "Mort",
+      "description": "Le joueur meurt et revient au départ du niveau.",
+      "params": {}
+    },
+    {
+      "id": "win",
+      "label": "Victoire",
+      "description": "Le niveau est terminé, passage au suivant.",
+      "params": {}
+    },
+    {
+      "id": "teleport",
+      "label": "Téléportation",
+      "description": "Téléporte le joueur vers une case cible.",
+      "params": {
+        "target_col": { "type": "int", "required": true },
+        "target_row": { "type": "int", "required": true }
+      }
+    },
+    {
+      "id": "show_hint",
+      "label": "Afficher un indice",
+      "description": "Affiche un message discret en haut de l'écran.",
+      "params": {
+        "hint_text": { "type": "string", "required": true },
+        "duration":  { "type": "int", "default": 3500, "description": "Millisecondes d'affichage (0 = permanent)" }
+      }
+    },
+    {
+      "id": "play_sound",
+      "label": "Jouer un son",
+      "description": "Déclenche une boucle musicale définie dans music_patterns.",
+      "params": {
+        "sound_id": { "type": "string", "required": true, "description": "Clé dans music_patterns du niveau" }
+      }
+    },
+    {
+      "id": "stop_sound",
+      "label": "Arrêter le son",
+      "description": "Arrête la boucle musicale en cours.",
+      "params": {}
+    }
+  ]
+}

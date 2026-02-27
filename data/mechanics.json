@@ -1,0 +1,80 @@
+{
+  "_comment": "Registre de toutes les mécaniques visuelles disponibles. Référencées dans les level JSON via le champ 'mechanic'.",
+  "mechanics": [
+    {
+      "id": "solid_color",
+      "label": "Couleur fixe",
+      "description": "La case affiche une couleur constante.",
+      "params": {
+        "color": { "type": "hex_color", "required": true, "example": "#C0392B" }
+      }
+    },
+    {
+      "id": "blinking",
+      "label": "Clignotant",
+      "description": "La case alterne entre visible (couleur) et invisible (sol nu).",
+      "params": {
+        "color": { "type": "hex_color", "required": true },
+        "speed": { "type": "float", "default": 0.04, "description": "Fréquence en cycles/frame" }
+      }
+    },
+    {
+      "id": "rotating_cw",
+      "label": "Rotation horaire",
+      "description": "Un carré coloré tourne dans le sens horaire sur la face de la tuile.",
+      "params": {
+        "color": { "type": "hex_color", "required": true },
+        "speed": { "type": "float", "default": 0.025, "description": "Radians/frame" }
+      }
+    },
+    {
+      "id": "rotating_ccw",
+      "label": "Rotation anti-horaire",
+      "description": "Idem rotating_cw mais dans le sens inverse.",
+      "params": {
+        "color": { "type": "hex_color", "required": true },
+        "speed": { "type": "float", "default": 0.025 }
+      }
+    },
+    {
+      "id": "levitating",
+      "label": "Lévitation",
+      "description": "La tuile monte et descend verticalement en boucle.",
+      "params": {
+        "color":     { "type": "hex_color", "required": true },
+        "amplitude": { "type": "float", "default": 8, "description": "Pixels de déplacement vertical" },
+        "frequency": { "type": "float", "default": 0.03, "description": "Cycles/frame" }
+      }
+    },
+    {
+      "id": "pulsing",
+      "label": "Pulsation",
+      "description": "La tuile pulse visuellement (variation d'intensité couleur).",
+      "params": {
+        "color":     { "type": "hex_color", "required": true },
+        "min_scale": { "type": "float", "default": 0.75 },
+        "max_scale": { "type": "float", "default": 1.0 },
+        "speed":     { "type": "float", "default": 0.03 }
+      }
+    },
+    {
+      "id": "multicolor",
+      "label": "Multicouleur cyclique",
+      "description": "La tuile parcourt une liste de couleurs en boucle.",
+      "params": {
+        "colors": { "type": "array[hex_color]", "required": true, "example": ["#E74C3C","#4A90D9","#F5A623"] },
+        "speed":  { "type": "float", "default": 0.01, "description": "Vitesse de rotation dans la liste" }
+      }
+    },
+    {
+      "id": "color_shift",
+      "label": "Dégradé animé",
+      "description": "La tuile oscille continuellement entre deux couleurs.",
+      "params": {
+        "color_from": { "type": "hex_color", "required": true },
+        "color_to":   { "type": "hex_color", "required": true },
+        "speed":      { "type": "float", "default": 0.02 }
+      }
+    }
+  ]
+}

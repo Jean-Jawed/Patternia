@@ -1,0 +1,160 @@
+{
+  "_comment": "Documentation du langage de règles JSON de Patternia. Ce fichier est purement informatif — il n'est pas lu par le moteur.",
+
+  "structure": {
+    "rule": {
+      "id":        "string — identifiant unique dans le niveau",
+      "condition": "object — voir conditions[]",
+      "effect":    "object — voir effects[] dans effects.json"
+    }
+  },
+
+  "conditions": [
+
+    {
+      "type": "touch_cell_color",
+      "description": "Vrai quand le joueur pose le pied sur une case de la couleur donnée.",
+      "params": { "color": "hex_color" },
+      "example": { "type": "touch_cell_color", "color": "#C0392B" }
+    },
+
+    {
+      "type": "touch_cell",
+      "description": "Vrai quand le joueur pose le pied sur la case avec cet id.",
+      "params": { "cell_id": "int" },
+      "example": { "type": "touch_cell", "cell_id": 12 }
+    },
+
+    {
+      "type": "reach_exit",
+      "description": "Vrai quand le joueur atteint la case de sortie (isExit=true).",
+      "params": {},
+      "example": { "type": "reach_exit" }
+    },
+
+    {
+      "type": "two_consecutive_same",
+      "description": "Vrai si les deux dernières cases colorées touchées (jokers exclus) sont de la même couleur.",
+      "params": { "color": "hex_color" },
+      "example": { "type": "two_consecutive_same", "color": "#4A90D9" }
+    },
+
+    {
+      "type": "two_consecutive_same_solid",
+      "description": "Idem mais ne compte que les cases non-blinking (les blinking/jokers remettent le compteur à zéro).",
+      "params": { "color": "hex_color" },
+      "example": { "type": "two_consecutive_same_solid", "color": "#4A90D9" }
+    },
+
+    {
+      "type": "pattern_break",
+      "description": "Vrai si la couleur actuelle rompt le pattern cyclique attendu. Ex: si pattern=[B,B,Y] le 1er pas doit être B, le 2e B, le 3e Y, le 4e B, etc.",
+      "params": { "pattern": "array[hex_color]" },
+      "example": { "type": "pattern_break", "pattern": ["#4A90D9","#4A90D9","#F5A623"] }
+    },
+
+    {
+      "type": "sequence_violates",
+      "description": "Vrai si le Nième pas coloré ne correspond pas au Nième élément de la séquence. Au-delà de la longueur de la séquence, plus de contrainte.",
+      "params": { "sequence": "array[hex_color]" },
+      "example": { "type": "sequence_violates", "sequence": ["#4A90D9","#C0392B","#4A90D9","#C0392B","#F5A623"] }
+    },
+
+    {
+      "type": "idle_seconds",
+      "description": "Vrai quand le joueur est resté immobile pendant N secondes consécutives. Évalué à chaque frame. Se réinitialise après déclenchement.",
+      "params": { "seconds": "float" },
+      "example": { "type": "idle_seconds", "seconds": 60 }
+    },
+
+    {
+      "type": "total_steps_equals",
+      "description": "Vrai quand le joueur a exactement posé le pied sur N cases colorées.",
+      "params": { "steps": "int" },
+      "example": { "type": "total_steps_equals", "steps": 10 }
+    },
+
+    {
+      "type": "music_playing",
+      "description": "Vrai si une boucle musicale est actuellement en cours.",
+      "params": {},
+      "example": { "type": "music_playing" }
+    },
+
+    {
+      "type": "AND",
+      "description": "Vrai si TOUTES les conditions imbriquées sont vraies.",
+      "params": { "conditions": "array[condition]" },
+      "example": {
+        "type": "AND",
+        "conditions": [
+          { "type": "touch_cell", "cell_id": 12 },
+          { "type": "music_playing" }
+        ]
+      }
+    },
+
+    {
+      "type": "OR",
+      "description": "Vrai si AU MOINS UNE des conditions imbriquées est vraie.",
+      "params": { "conditions": "array[condition]" },
+      "example": {
+        "type": "OR",
+        "conditions": [
+          { "type": "touch_cell_color", "color": "#C0392B" },
+          { "type": "touch_cell_color", "color": "#F5A623" }
+        ]
+      }
+    },
+
+    {
+      "type": "custom_rule",
+      "description": "Délègue à une fonction JS nommée dans rules.js section CUSTOM RULES. À utiliser quand le JSON pur ne suffit pas.",
+      "params": { "name": "string" },
+      "example": { "type": "custom_rule", "name": "three_roundtrips" }
+    }
+
+  ],
+
+  "level_schema": {
+    "id":              "int — numéro du niveau",
+    "title":           "string — affiché dans le HUD",
+    "death_message":   "string — affiché à la mort",
+    "win_message":     "string — affiché à la victoire",
+    "grid_size":       "int — taille de la grille (6 par défaut)",
+    "start":           "[col, row] — position de départ",
+    "exit":            "[col, row] — position de sortie",
+    "border_behavior": "string — 'kill' | 'block' | 'wrap' | 'exit' (défaut: 'kill')",
+    "cells":           "array[cell] — cases avec mécaniques",
+    "rules":           "array[rule] — règles évaluées à chaque pas",
+    "on_start":        "array[event] — événements déclenchés au chargement du niveau",
+    "hints":           "array[hint] — indices conditionnels basés sur death_count",
+    "wall_hint":       "{ colors: array[hex], label: string } | null",
+    "music_patterns":  "{ sound_id: array[{ freq, duration }] } — patterns audio procéduraux"
+  },
+
+  "cell_schema": {
+    "id":               "int — identifiant unique dans le niveau",
+    "position":         "[col, row]",
+    "mechanic":         "string — id de mécanique (voir mechanics.json)",
+    "mechanic_params":  "object — paramètres spécifiques à la mécanique",
+    "joker":            "bool — si true, cette case est considérée comme joker (brise les séquences sans les compter)"
+  },
+
+  "hint_schema": {
+    "trigger":    "'death_count'",
+    "threshold":  "int — nombre de morts à partir duquel l'indice s'affiche",
+    "text":       "string — texte de l'indice",
+    "duration":   "int — millisecondes (défaut: 4000)"
+  },
+
+  "on_start_event_schema": {
+    "type":      "'show_hint' | 'show_sequence' | 'play_sound'",
+    "delay":     "int — délai en ms avant déclenchement (défaut: 0)",
+    "hint_text": "string (pour show_hint)",
+    "duration":  "int (pour show_hint et show_sequence)",
+    "colors":    "array[hex_color] (pour show_sequence)",
+    "label":     "string (pour show_sequence)",
+    "sound_id":  "string (pour play_sound)"
+  }
+}

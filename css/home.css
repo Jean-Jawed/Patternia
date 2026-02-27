@@ -1,0 +1,192 @@
+/* ============================================================
+   home.css — Page d'accueil Patternia
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #F5F2EC;
+  --ink:       #1A1814;
+  --ink-faint: #6B6760;
+  --accent:    #C8A96E;
+  --accent2:   #7B9EA6;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  font-family: 'Raleway', sans-serif;
+}
+
+/* Background canvas */
+#bg-canvas {
+  position: fixed; inset: 0;
+  width: 100%; height: 100%;
+  z-index: 0; pointer-events: none;
+}
+
+/* Layout */
+.home {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; height: 100%;
+}
+
+.home__inner {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  opacity: 0;
+  animation: fadeInUp 1.6s cubic-bezier(.16, 1, .3, 1) .4s forwards;
+}
+
+/* Eyebrow */
+.home__eyebrow {
+  font-weight: 300;
+  font-size: clamp(.7rem, 1.2vw, .85rem);
+  letter-spacing: .3em; text-transform: uppercase;
+  color: var(--ink-faint); margin-bottom: 1.6rem;
+}
+
+/* Title */
+.home__title {
+  font-family: 'Cormorant Garamond', serif; font-weight: 300;
+  font-size: clamp(5rem, 14vw, 11rem);
+  line-height: .88; color: var(--ink);
+  letter-spacing: -.02em; margin-bottom: 1.4rem;
+}
+.home__title-p { color: var(--accent); font-weight: 600; }
+
+/* Subtitle */
+.home__subtitle {
+  font-weight: 200;
+  font-size: clamp(.75rem, 1.5vw, .95rem);
+  letter-spacing: .45em; text-transform: uppercase;
+  color: var(--ink-faint); margin-bottom: 3.5rem;
+}
+
+/* Shared button style — used by Start and Credits */
+.home__nav-btn {
+  background: none; border: none; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: .6rem;
+  padding: .8rem 2.4rem; position: relative;
+  outline: none;
+}
+.home__nav-btn-text {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300; font-size: clamp(.75rem, 1.5vw, .9rem);
+  letter-spacing: .6em; text-transform: uppercase;
+  color: var(--ink); transition: color .3s; padding-left: .6em;
+}
+.home__nav-btn-line {
+  display: block; width: 2.4rem; height: 1px; background: var(--accent);
+  transform-origin: left;
+  transition: width .4s cubic-bezier(.16, 1, .3, 1);
+}
+.home__nav-btn:hover .home__nav-btn-text { color: var(--accent); }
+.home__nav-btn:hover .home__nav-btn-line { width: 4.8rem; }
+.home__nav-btn::before {
+  content: ''; position: absolute; inset: 0;
+  border: 1px solid var(--accent);
+  opacity: 0; transform: scale(1.15);
+  transition: opacity .3s, transform .4s cubic-bezier(.16, 1, .3, 1);
+}
+.home__nav-btn:hover::before { opacity: .4; transform: scale(1); }
+
+/* Buttons wrapper */
+.home__buttons {
+  display: flex; flex-direction: column; align-items: center; gap: .2rem;
+  margin-bottom: 2.8rem;
+}
+
+/* Hint */
+.home__hint {
+  font-weight: 300; font-size: clamp(.65rem, 1vw, .75rem);
+  letter-spacing: .25em; text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* Footer */
+.home-footer {
+  position: fixed; bottom: 1.4rem; left: 0; right: 0;
+  text-align: center; z-index: 1;
+  font-weight: 300; font-size: .65rem;
+  letter-spacing: .2em; color: var(--ink-faint);
+}
+
+/* Transition out */
+body.exiting .home__inner {
+  animation: fadeOutUp .55s cubic-bezier(.7, 0, 1, 1) forwards;
+}
+body.exiting #bg-canvas {
+  animation: bgFade .55s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeOutUp {
+  to { opacity: 0; transform: translateY(-20px); }
+}
+@keyframes bgFade {
+  to { opacity: 0; }
+}
+
+/* ── Credits modal ── */
+.credits-modal {
+  position: fixed; inset: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none; opacity: 0;
+  transition: opacity .35s ease;
+}
+.credits-modal.open { pointer-events: all; opacity: 1; }
+.credits-modal__backdrop {
+  position: absolute; inset: 0;
+  background: rgba(26,24,20,.45); backdrop-filter: blur(3px);
+}
+.credits-modal__box {
+  position: relative; z-index: 1;
+  background: var(--bg); border: 1px solid rgba(200,169,110,.3);
+  padding: 3rem 3.5rem; max-width: 380px; width: 90%;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  transform: translateY(12px);
+  transition: transform .35s cubic-bezier(.16,1,.3,1);
+}
+.credits-modal.open .credits-modal__box { transform: translateY(0); }
+.credits-modal__close {
+  position: absolute; top: 1rem; right: 1.2rem;
+  background: none; border: none; cursor: pointer;
+  font-size: .85rem; color: var(--ink-faint);
+  transition: color .2s;
+}
+.credits-modal__close:hover { color: var(--ink); }
+.credits-modal__eyebrow {
+  font-weight: 300; font-size: .6rem; letter-spacing: .4em;
+  text-transform: uppercase; color: var(--ink-faint); margin-bottom: 1rem;
+}
+.credits-modal__title {
+  font-family: 'Cormorant Garamond', serif; font-weight: 300;
+  font-size: 2.6rem; color: var(--ink); letter-spacing: -.01em; margin-bottom: 1.6rem;
+}
+.credits-modal__text {
+  font-weight: 300; font-size: .82rem; line-height: 2.1;
+  letter-spacing: .06em; color: var(--ink-faint); margin-bottom: 2rem;
+}
+.credits-modal__divider {
+  width: 2rem; height: 1px; background: var(--accent); margin-bottom: 1.8rem;
+}
+.credits-modal__byline {
+  font-weight: 300; font-size: .72rem; letter-spacing: .2em;
+  line-height: 2; color: var(--ink-faint); margin-bottom: 1.6rem;
+}
+.credits-modal__link {
+  color: var(--ink); text-decoration: none; letter-spacing: .2em;
+  border-bottom: 1px solid rgba(200,169,110,.5); transition: border-color .2s;
+}
+.credits-modal__link:hover { border-color: var(--accent); }
+.credits-modal__tip {
+  font-weight: 300; font-size: .65rem; letter-spacing: .25em;
+  text-transform: uppercase; color: var(--ink-faint);
+  text-decoration: none; transition: color .2s;
+}
+.credits-modal__tip:hover { color: var(--ink); }

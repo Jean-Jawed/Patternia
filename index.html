@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Patternia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Raleway:wght@100;200;300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/home.css"/>
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+  <main class="home">
+    <div class="home__inner">
+      <p class="home__eyebrow">— a puzzle of hidden rules —</p>
+      <h1 class="home__title"><span class="home__title-p">P</span>atternia</h1>
+      <p class="home__subtitle">Observe. Deduce. Understand.</p>
+      <div class="home__buttons">
+        <button class="home__nav-btn" id="btn-start">
+          <span class="home__nav-btn-text">Start</span>
+          <span class="home__nav-btn-line"></span>
+        </button>
+        <button class="home__nav-btn" id="btn-credits">
+          <span class="home__nav-btn-text">Credits</span>
+          <span class="home__nav-btn-line"></span>
+        </button>
+      </div>
+      <p class="home__hint">Arrow keys to move</p>
+    </div>
+  </main>
+
+  <!-- Credits modal -->
+  <div class="credits-modal" id="credits-modal" aria-hidden="true">
+    <div class="credits-modal__backdrop" id="credits-backdrop"></div>
+    <div class="credits-modal__box">
+      <button class="credits-modal__close" id="btn-credits-close" aria-label="Close">✕</button>
+      <p class="credits-modal__eyebrow">About</p>
+      <h2 class="credits-modal__title">Patternia</h2>
+      <p class="credits-modal__text">
+        There are no instructions.<br>
+        There are no explanations.<br>
+        There are only patterns —<br>
+        and the quiet patience<br>
+        of learning to read them.
+      </p>
+      <div class="credits-modal__divider"></div>
+      <p class="credits-modal__byline">
+        Conceived &amp; crafted by<br>
+        <a href="https://javed.fr" target="_blank" rel="noopener" class="credits-modal__link">Javed</a>
+      </p>
+      <a href="https://buy.stripe.com/7sY7sL3vgbox3pPdhJ9AA00" target="_blank" rel="noopener" class="credits-modal__tip">
+        Leave a tip ↗
+      </a>
+    </div>
+  </div>
+
+  <footer class="home-footer">© 2025 Patternia</footer>
+  <script type="module" src="js/home.js"></script>
+</body>
+</html>
