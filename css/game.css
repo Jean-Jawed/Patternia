@@ -75,24 +75,42 @@ html, body {
 
 .hidden { display: none !important; }
 
-/* ── Joystick ── */
-#joystick-container {
-  position: fixed; bottom: 2.5rem; left: 50%;
-  transform: translateX(-50%); z-index: 20;
+/* ── D-pad mobile ── */
+#dpad {
+  position: fixed; bottom: 2.2rem; left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: grid;
+  grid-template-areas:
+    ".    up    ."
+    "left .     right"
+    ".    down  .";
+  grid-template-columns: 3.2rem 3.2rem 3.2rem;
+  grid-template-rows:    3.2rem 3.2rem 3.2rem;
+  gap: .3rem;
 }
-#joystick-base {
-  width: 100px; height: 100px; border-radius: 50%;
-  background: rgba(26,24,20,.06);
-  border: 1px solid rgba(26,24,20,.12);
-  position: relative;
+.dpad__btn {
+  background: rgba(245,242,236,.88);
+  border: 1px solid rgba(200,169,110,.4);
+  color: var(--ink-faint);
+  font-size: 1.1rem; line-height: 1;
+  border-radius: 6px;
+  cursor: pointer;
   display: flex; align-items: center; justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  transition: background .12s, color .12s, border-color .12s;
 }
-#joystick-thumb {
-  width: 40px; height: 40px; border-radius: 50%;
-  background: var(--accent); opacity: .7;
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
+.dpad__btn:active,
+.dpad__btn.pressed {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
 }
+#dpad-up    { grid-area: up; }
+#dpad-left  { grid-area: left; }
+#dpad-right { grid-area: right; }
+#dpad-down  { grid-area: down; }
 
 /* ── Dev level nav sidebar ── */
 #dev-nav {

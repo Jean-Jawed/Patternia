@@ -39,24 +39,24 @@
         <div class="screen__symbol">✕</div>
         <div class="screen__message" id="death-message">You fell.</div>
         <button class="screen__btn" id="btn-retry">Try again</button>
-      </div>
-    </div>
+  
+
 
     <div id="screen-win" class="screen hidden">
       <div class="screen__inner">
         <div class="screen__symbol">◇</div>
         <div class="screen__message" id="win-message">Pattern understood.</div>
         <button class="screen__btn" id="btn-next">Continue</button>
-      </div>
-    </div>
+  
+
 
     <div id="screen-complete" class="screen hidden">
       <div class="screen__inner">
         <div class="screen__symbol">✦</div>
         <div class="screen__message">All patterns mastered.<br>You see what others miss.</div>
         <button class="screen__btn" id="btn-restart">Play again</button>
-      </div>
-    </div>
+  
+
 
     <div id="hint-box" class="hidden"></div>
     <div id="wall-hint"></div>
@@ -64,11 +64,12 @@
 
   </div>
 
-  <!-- Mobile joystick -->
-  <div id="joystick-container" class="hidden">
-    <div id="joystick-base">
-      <div id="joystick-thumb"></div>
-    </div>
+  <!-- Mobile D-pad -->
+  <div id="dpad" class="hidden">
+    <button class="dpad__btn" id="dpad-up"    data-dir="up">↑</button>
+    <button class="dpad__btn" id="dpad-left"  data-dir="left">←</button>
+    <button class="dpad__btn" id="dpad-right" data-dir="right">→</button>
+    <button class="dpad__btn" id="dpad-down"  data-dir="down">↓</button>
   </div>
 
   <!-- Level transition flash -->

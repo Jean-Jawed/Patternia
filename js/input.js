@@ -74,51 +74,38 @@ export class InputManager {
     else if (!active) this._gpPrev[key] = false;
   }
 
-  // ── Mobile joystick ───────────────────────────────────────
+  // ── Mobile D-pad ──────────────────────────────────────────
   _maybeBindJoystick() {
     if (!('ontouchstart' in window) && navigator.maxTouchPoints < 1) return;
 
-    const container = document.getElementById('joystick-container');
-    const base      = document.getElementById('joystick-base');
-    const thumb     = document.getElementById('joystick-thumb');
-    if (!base) return;
+    const dpad = document.getElementById('dpad');
+    if (!dpad) return;
+    dpad.classList.remove('hidden');
 
-    container?.classList.remove('hidden');
+    const dirs = ['up', 'down', 'left', 'right'];
 
-    let sx = 0, sy = 0;
-    const DEAD = 18, MAX = 38;
+    dirs.forEach(dir => {
+      const btn = document.getElementById(`dpad-${dir}`);
+      if (!btn) return;
 
-    base.addEventListener('touchstart', e => {
-      const r = base.getBoundingClientRect();
-      sx = r.left + r.width  / 2;
-      sy = r.top  + r.height / 2;
-    }, { passive: true });
+      // touchstart: enqueue immediately on finger-down
+      btn.addEventListener('touchstart', e => {
+        e.preventDefault();
+        this._enqueue(dir);
+        btn.classList.add('pressed');
+      }, { passive: false });
 
-    base.addEventListener('touchmove', e => {
-      const t  = e.touches[0];
-      const dx = t.clientX - sx, dy = t.clientY - sy;
-      const d  = Math.sqrt(dx*dx + dy*dy);
-      const cl = Math.min(d, MAX);
-      if (thumb) thumb.style.transform =
-        `translate(calc(-50% + ${dx/d*cl}px), calc(-50% + ${dy/d*cl}px))`;
+      btn.addEventListener('touchend', () => {
+        btn.classList.remove('pressed');
+      }, { passive: true });
 
-      if (d > DEAD) {
-        const ang = Math.atan2(dy, dx) * 180 / Math.PI;
-        let dir;
-        if      (ang > -135 && ang <= -45) dir = 'up';
-        else if (ang > -45  && ang <=  45) dir = 'right';
-        else if (ang >  45  && ang <= 135) dir = 'down';
-        else                               dir = 'left';
-        if (dir !== this._joyDir) { this._joyDir = dir; this._enqueue(dir); }
-      } else {
-        this._joyDir = null;
-      }
-      e.preventDefault();
-    }, { passive: false });
-
-    base.addEventListener('touchend', () => {
-      if (thumb) thumb.style.transform = 'translate(-50%, -50%)';
-      this._joyDir = null;
+      // Fallback for mouse (desktop testing)
+      btn.addEventListener('mousedown', () => {
+        this._enqueue(dir);
+        btn.classList.add('pressed');
+      });
+      btn.addEventListener('mouseup',   () => btn.classList.remove('pressed'));
+      btn.addEventListener('mouseleave',() => btn.classList.remove('pressed'));
     });
   }
 
