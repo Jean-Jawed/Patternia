@@ -46,6 +46,7 @@ async function init() {
   }
 
   buildDevNav();
+  initDevJump();
   await loadLevel(0);
   requestAnimationFrame(loop);
 }
@@ -69,6 +70,9 @@ async function loadLevel(idx) {
 
   currentData = result.levelData;
   currentGrid = result.grid;
+
+  // Adapter le renderer à la taille de grille du niveau
+  renderer.setGridSize(currentData.grid_size || 6);
 
   // Init player
   const [sc, sr] = currentData.start || [0, 0];
@@ -174,6 +178,8 @@ async function reloadCurrentLevel() {
   currentData = result.levelData;
   currentGrid = result.grid;
 
+  renderer.setGridSize(currentData.grid_size || 6);
+
   const [sc, sr] = currentData.start || [0, 0];
   player.reset(sc, sr);
 
@@ -246,4 +252,38 @@ function updateDevNav() {
   document.querySelectorAll('.dev-nav__btn').forEach((btn, idx) => {
     btn.classList.toggle('active', idx === levelIndex);
   });
+}
+
+// ── Dev nav : jump to level ──────────────────────────────
+function initDevJump() {
+  const input = document.getElementById('dev-jump-input');
+  const btn   = document.getElementById('dev-jump-btn');
+  const err   = document.getElementById('dev-jump-error');
+
+  function jump() {
+    err.textContent = '';
+    const raw = input.value.trim();
+
+    // Validation : entier
+    if (!/^\d+$/.test(raw)) {
+      err.textContent = 'Entier requis';
+      return;
+    }
+
+    const id  = parseInt(raw, 10);
+    const idx = levelList.indexOf(id);
+
+    // Validation : niveau existant
+    if (idx === -1) {
+      err.textContent = `Niveau ${id} introuvable`;
+      return;
+    }
+
+    input.value = '';
+    rules.resetDeaths();
+    ui.flash(() => loadLevel(idx));
+  }
+
+  btn.addEventListener('click', jump);
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') jump(); });
 }

@@ -6,8 +6,6 @@
 
 import { getTileVerts, darken, lerpColor } from './utils.js';
 
-const GRID = 6;  // nombre de tuiles côté
-
 export class Renderer {
   constructor(canvas) {
     this.canvas  = canvas;
@@ -15,6 +13,7 @@ export class Renderer {
     this.originX = 0;
     this.originY = 0;
     this.time    = 0;
+    this.gridSize = 6;  // mis à jour par setGridSize() à chaque niveau
     // Tile dimensions — recalculées au resize
     this.TW    = 92;
     this.TH    = 54;
@@ -25,6 +24,12 @@ export class Renderer {
   resize() {
     this.canvas.width  = window.innerWidth;
     this.canvas.height = window.innerHeight;
+    this._recalcTileSize();
+    this._recalcOrigin();
+  }
+
+  setGridSize(n) {
+    this.gridSize = n;
     this._recalcTileSize();
     this._recalcOrigin();
   }
@@ -57,8 +62,8 @@ export class Renderer {
     const TH_RATIO    = 54 / 92;
     const DEPTH_RATIO = 14 / 92;
 
-    const twFromW = availW / GRID;
-    const twFromH = availH / ((GRID - 0.5) * TH_RATIO / 2 + DEPTH_RATIO);
+    const twFromW = availW / this.gridSize;
+    const twFromH = availH / ((this.gridSize - 0.5) * TH_RATIO / 2 + DEPTH_RATIO);
 
     let tw = Math.min(twFromW, twFromH);
 
@@ -81,7 +86,7 @@ export class Renderer {
     const hudH  = isMobile ? 60  : 70;
     const dpadH = isMobile ? 200 : 0;
 
-    const gridH = (GRID - 0.5) * TH / 2 + DEPTH;
+    const gridH = (this.gridSize - 0.5) * TH / 2 + DEPTH;
     const availH = H - hudH - dpadH;
 
     this.originX = W / 2;
@@ -90,6 +95,7 @@ export class Renderer {
 
   // ── Draw one tile ──────────────────────────────────────────
   drawTile(col, row, cell) {
+    if (cell?.isInvisible) return;
     const { TW, TH, DEPTH } = this;
     const ctx = this.ctx;
     const v   = getTileVerts(col, row, TW, TH, this.originX, this.originY);
@@ -199,7 +205,7 @@ export class Renderer {
   // ── Draw full grid (painter's order) ──────────────────────
   drawGrid(grid) {
     const order = [];
-    for (let r = 0; r < GRID; r++) for (let c = 0; c < GRID; c++) order.push([c, r]);
+    for (let r = 0; r < this.gridSize; r++) for (let c = 0; c < this.gridSize; c++) order.push([c, r]);
     order.sort((a, b) => (a[0]+a[1]) - (b[0]+b[1]));
     for (const [c, r] of order) this.drawTile(c, r, grid[r][c]);
   }

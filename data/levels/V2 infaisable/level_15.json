@@ -10,7 +10,7 @@
   "on_start": [
     {
       "type": "show_sequence",
-      "colors": ["#F5A623", "#4A90D9", "#C0392B"],
+      "colors": ["#4A90D9", "#C0392B", "#F5A623"],
       "duration": 2800,
       "label": "",
       "delay": 200
@@ -63,7 +63,7 @@
     { "id": 34, "position": [4,5], "mechanic": "solid_color", "mechanic_params": { "color": "#C0392B" } }
   ],
   "rules": [
-    { "id": "seq_fail", "condition": { "type": "sequence_violates", "sequence": ["#F5A623","#4A90D9","#C0392B"] }, "effect": { "type": "kill" } },
+    { "id": "seq_fail", "condition": { "type": "sequence_violates", "sequence": ["#4A90D9","#C0392B","#F5A623"] }, "effect": { "type": "kill" } },
     { "id": "win",      "condition": { "type": "reach_exit" },                                                     "effect": { "type": "win" } }
   ]
 }

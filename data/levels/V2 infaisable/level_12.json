@@ -9,8 +9,7 @@
   "border_behavior": "kill",
   "on_start": [],
   "hints": [
-    { "trigger": "death_count", "threshold": 4, "text": "Not everything dangerous looks the same.", "duration": 4000 },
-    { "trigger": "death_count", "threshold": 8, "text": "Only one color is truly wrong.", "duration": 4500 }
+    { "trigger": "death_count", "threshold": 4, "text": "Two colors are wrong now.", "duration": 4000 }
   ],
   "wall_hint": null,
   "music_patterns": {},
@@ -56,7 +55,8 @@
     { "id": 34, "position": [4,5], "mechanic": "solid_color", "mechanic_params": { "color": "#F5A623" } }
   ],
   "rules": [
-    { "id": "kill_red", "condition": { "type": "touch_cell_color", "color": "#C0392B" }, "effect": { "type": "kill" } },
-    { "id": "win",      "condition": { "type": "reach_exit" },                           "effect": { "type": "win" } }
+    { "id": "kill_red",    "condition": { "type": "touch_cell_color", "color": "#C0392B" }, "effect": { "type": "kill" } },
+    { "id": "kill_yellow", "condition": { "type": "touch_cell_color", "color": "#F5A623" }, "effect": { "type": "kill" } },
+    { "id": "win",         "condition": { "type": "reach_exit" },                           "effect": { "type": "win" } }
   ]
 }

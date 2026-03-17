@@ -1,0 +1,61 @@
+{
+  "id": 7,
+  "title": "VII",
+  "death_message": "…",
+  "win_message": ".",
+  "grid_size": 6,
+  "start": [0, 0],
+  "exit": [5, 5],
+  "border_behavior": "kill",
+  "on_start": [],
+  "hints": [
+    { "trigger": "death_count", "threshold": 4, "text": "Look at the bottom of the screen.", "duration": 5000 }
+  ],
+  "wall_hint": { "colors": ["#4A90D9", "#F5A623", "#4A90D9"], "label": "" },
+  "music_patterns": {},
+  "cells": [
+    { "id":  1, "position": [1,0], "mechanic": "rotating_cw", "mechanic_params": { "color": "#4A90D9", "speed": 0.025 } },
+    { "id":  2, "position": [2,0], "mechanic": "solid_color", "mechanic_params": { "color": "#F5A623" } },
+    { "id":  3, "position": [3,0], "mechanic": "rotating_cw", "mechanic_params": { "color": "#4A90D9", "speed": 0.02 } },
+    { "id":  4, "position": [4,0], "mechanic": "solid_color", "mechanic_params": { "color": "#F5A623" } },
+    { "id":  5, "position": [5,0], "mechanic": "rotating_cw", "mechanic_params": { "color": "#4A90D9", "speed": 0.03 } },
+
+    { "id":  6, "position": [0,1], "mechanic": "solid_color", "mechanic_params": { "color": "#F5A623" } },
+    { "id":  7, "position": [1,1], "mechanic": "rotating_cw", "mechanic_params": { "color": "#4A90D9", "speed": 0.022 } },
+    { "id":  8, "position": [2,1], "mechanic": "solid_color", "mechanic_params": { "color": "#F5A623" } },
+    { "id":  9, "position": [3,1], "mechanic": "rotating_cw", "mechanic_params": { "color": "#4A90D9", "speed": 0.028 } },
+    { "id": 10, "position": [4,1], "mechanic": "solid_color", "mechanic_params": { "color": "#F5A623" } },
+    { "id": 11, "position": [5,1], "mechanic": "rotating_cw", "mechanic_params": { "color": "#4A90D9", "speed": 0.02 } },
+
+    { "id": 12, "position": [0,2], "mechanic": "rotating_cw", "mechanic_params": { "color": "#4A90D9", "speed": 0.025 } },
+    { "id": 13, "position": [1,2], "mechanic": "solid_color", "mechanic_params": { "color": "#F5A623" } },
+    { "id": 14, "position": [2,2], "mechanic": "rotating_cw", "mechanic_params": { "color": "#4A90D9", "speed": 0.02 } },
+    { "id": 15, "position": [3,2], "mechanic": "solid_color", "mechanic_params": { "color": "#F5A623" } },
+    { "id": 16, "position": [4,2], "mechanic": "rotating_cw", "mechanic_params": { "color": "#4A90D9", "speed": 0.03 } },
+    { "id": 17, "position": [5,2], "mechanic": "solid_color", "mechanic_params": { "color": "#F5A623" } },
+
+    { "id": 18, "position": [0,3], "mechanic": "solid_color", "mechanic_params": { "color": "#F5A623" } },
+    { "id": 19, "position": [1,3], "mechanic": "rotating_cw", "mechanic_params": { "color": "#4A90D9", "speed": 0.023 } },
+    { "id": 20, "position": [2,3], "mechanic": "solid_color", "mechanic_params": { "color": "#F5A623" } },
+    { "id": 21, "position": [3,3], "mechanic": "rotating_cw", "mechanic_params": { "color": "#4A90D9", "speed": 0.026 } },
+    { "id": 22, "position": [4,3], "mechanic": "solid_color", "mechanic_params": { "color": "#F5A623" } },
+    { "id": 23, "position": [5,3], "mechanic": "rotating_cw", "mechanic_params": { "color": "#4A90D9", "speed": 0.021 } },
+
+    { "id": 24, "position": [0,4], "mechanic": "rotating_cw", "mechanic_params": { "color": "#4A90D9", "speed": 0.024 } },
+    { "id": 25, "position": [1,4], "mechanic": "solid_color", "mechanic_params": { "color": "#F5A623" } },
+    { "id": 26, "position": [2,4], "mechanic": "rotating_cw", "mechanic_params": { "color": "#4A90D9", "speed": 0.027 } },
+    { "id": 27, "position": [3,4], "mechanic": "solid_color", "mechanic_params": { "color": "#F5A623" } },
+    { "id": 28, "position": [4,4], "mechanic": "rotating_cw", "mechanic_params": { "color": "#4A90D9", "speed": 0.022 } },
+    { "id": 29, "position": [5,4], "mechanic": "solid_color", "mechanic_params": { "color": "#F5A623" } },
+
+    { "id": 30, "position": [0,5], "mechanic": "solid_color", "mechanic_params": { "color": "#F5A623" } },
+    { "id": 31, "position": [1,5], "mechanic": "rotating_cw", "mechanic_params": { "color": "#4A90D9", "speed": 0.025 } },
+    { "id": 32, "position": [2,5], "mechanic": "solid_color", "mechanic_params": { "color": "#F5A623" } },
+    { "id": 33, "position": [3,5], "mechanic": "rotating_cw", "mechanic_params": { "color": "#4A90D9", "speed": 0.02 } },
+    { "id": 34, "position": [4,5], "mechanic": "solid_color", "mechanic_params": { "color": "#F5A623" } }
+  ],
+  "rules": [
+    { "id": "pattern", "condition": { "type": "pattern_break", "pattern": ["#4A90D9","#F5A623","#4A90D9"] }, "effect": { "type": "kill" } },
+    { "id": "win",     "condition": { "type": "reach_exit" },                                                 "effect": { "type": "win" } }
+  ]
+}

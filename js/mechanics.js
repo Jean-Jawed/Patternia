@@ -81,6 +81,11 @@ export class MechanicsEngine {
             break;
           }
 
+          case 'invisible':
+            cell.currentColor = null;
+            cell.isInvisible  = true;
+            break;
+
           default:
             cell.currentColor = cell.baseColor;
         }
